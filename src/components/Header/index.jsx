@@ -1,5 +1,6 @@
 import React from 'react';
 import './style.css';
+import { Routes, Reservation } from 'react-router-dom';
 
 export const Header = () => (
   <header>
@@ -10,3 +11,5 @@ export const Header = () => (
     </div>
   </header>
 );
+
+export default Header;
