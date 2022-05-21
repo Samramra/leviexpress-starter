@@ -1,53 +1,53 @@
 import React, { useEffect, useState } from 'react';
 import mapImage from './img/map.svg';
+import { CityOptions } from './CityOptions';
 import './style.css';
 
-
-
-
-
 export const JourneyPicker = ({ onJourneyChange }) => {
+  const [fromCity, setFromCity] = useState(''); 
+  const [toCity, setToCity] = useState(''); 
+  const [date, setDate] = useState(''); 
+  const [cities, setCities] = useState([]);  
 
-  const [fromCity, setFromCity] = useState() 
-  const [toCity, setToCity] = useState() 
-  const [date, setDate] = useState() 
+  useEffect(() => {
+    fetch('https://apps.kodim.cz/daweb/leviexpress/api/cities')
+    .then((resp) => resp.json())
+    .then((data) => setCities(data.results))
+  }, []);
+
   const handleSubmit = (event) => {
-    event.preventDefault()
+    event.preventDefault();
     console.log({fromCity});
     console.log({toCity});
     console.log({date});
   };
   
     return (
-
   <div className="journey-picker container">
     <h2 className="journey-picker__head">Kam chcete jet?</h2>
     <div className="journey-picker__body">
       <form className="journey-picker__form">
         <label>
           <div className="journey-picker__label">Odkud:</div>
-          <select>
-            <option value="">Vyberte</option>
-            <option value="mesto01" onChange={() => setFromCity(FromCity)}>Město1</option>
-            <option value="mesto02" onChange={() => setFromCity(FromCity)}>Město2</option>
-            <option value="mesto03" onChange={() => setFromCity(FromCity)}>Město3</option>
-            <option value="mesto04" onChange={() => setFromCity(FromCity)}>Město4</option>
-            <option value="mesto05" onChange={() => setFromCity(FromCity)}>Město5</option>
+          <select
+          value={fromCity}
+          onChange={(event) => setFromCity(event.target.value)}>
+          <CityOptions cities={cities} />
           </select>
         </label>
+
         <label>
           <div className="journey-picker__label">Kam:</div>
-          <select>
-            <option value="">Vyberte</option>
-            <option value="mesto01" onChange={() => setToCity(toCity)}>Město1</option>
-            <option value="mesto02" onChange={() => setToCity(toCity)}>Město2</option>
-            <option value="mesto03" onChange={() => setToCity(toCity)}>Město3</option>
-            <option value="mesto04" onChange={() => setToCity(toCity)}>Město4</option>
-            <option value="mesto05" onChange={() => setToCity(toCity)}>Město5</option>
+          <select
+          value={toCity}
+          onChange={(event) => setToCity(event.target.value)}>
+        <CityOptions cities={cities} />
           </select>
         </label>
+        
         <label>
           <div className="journey-picker__label">Datum:</div>
+
           <select>
             <option value="">Vyberte</option>
             <option value="datum01" onChange={() => setDate(date)}>datum01</option>
